@@ -11,5 +11,5 @@ ENV CXX g++
 
 RUN git clone -b ${GRPC_VERSION} https://github.com/grpc/grpc /var/local/git/grpc && \
     cd /var/local/git/grpc && \
-    bazel build :all
+    bazel build :all && bazel clean
 

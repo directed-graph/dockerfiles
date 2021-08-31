@@ -1,6 +1,6 @@
 
 FROM gcc:10.2.0
-ARG BAZEL_VERSION=3.7.2
+ARG BAZEL_VERSION=4.0.0
 
 RUN apt-get update && apt-get install -y wget unzip zip && apt-get clean
 

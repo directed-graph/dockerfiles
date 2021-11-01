@@ -23,6 +23,9 @@ General usage:
         --env USE_BUILD_DIR=yes \
         implementing/builder <build_command>
 
+
+## User ID Consistency
+
 If your user ID is not 1000, be sure to also set environment variables for
 `BUILD_USER_ID` and/or `BUILD_GROUP_ID`. For example:
 
@@ -38,3 +41,12 @@ In order to satisfy these two conditions, we will need a build user. Indeed,
 the build user will need access to the `${PROJECT_DIR}`. So to do this, we will
 create the user (`${BUILD_USER}`) with a floating user ID (`${BUILD_USER_UID}`)
 and a floating group ID (`${BUILD_USER_GID}`).
+
+
+## Rootless Docker
+
+If you are running rootless Docker, then the permissions to access files in the
+`${PROJECT_DIR}` may get broken. To fix this, we have a rootless mode enabled
+with the `ROOTLESS` environment variable:
+
+    --env ROOTLESS=yes

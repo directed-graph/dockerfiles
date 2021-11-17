@@ -23,6 +23,30 @@ General usage:
         --env USE_BUILD_DIR=yes \
         implementing/builder <build_command>
 
+    # Build bazel project with build cache.
+    docker run --rm \
+        --volume $(pwd):${PROJECT_DIR} \
+        --volume ~/.cache/bazel/project:${CACHE_DIR} \
+        --env USE_BUILD_DIR=yes \
+        implementing/builder bazel --output_base ${CACHE_DIR} ...
+
+
+## Environment Variables
+
+- `BUILD_DIR`: The directory to build in. That is, items in `PROJECT_DIR` will
+               be copied here, and the build will be executed from here.
+- `BUILD_USER`: The user to build with.
+- `BUILD_USER_GID`: The gid for the build user.
+- `BUILD_USER_UID`: The uid for the build user.
+- `CACHE_DIR`: The cache directory, which may be useful if you want to take
+               advantage of a build cache while building. This should be mapped
+               from the host to actually be used.
+- `PROJECT_DIR`: The directory in which the project source code resides. This
+                 should be mapped from the host.
+- `ROOTLESS`: Whether or not to set up the container in rootless mode.
+- `USE_BUILD_DIR`: Whether or not to use the `BUILD_DIR`. If not set, then the
+                   build will happen from the `PROJECT_DIR` directly (which,
+                   recall, is mapped to the host).
 
 ## User ID Consistency
 

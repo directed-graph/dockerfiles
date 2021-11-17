@@ -44,5 +44,9 @@ else
     cd "${BUILD_DIR}"
   fi
 
+  if ! is_dir_and_can_access "${CACHE_DIR}"; then
+    >&2 echo "Unable to access ${CACHE_DIR}. Ignoring..."
+  fi
+
   "${@}"
 fi

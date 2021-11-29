@@ -12,13 +12,19 @@ is_dir_and_can_access() {
 if (( "${EUID:-$(id -u)}" == 0 )); then
   groupadd -g ${BUILD_USER_GID} "${BUILD_USER}" || true
   useradd -m -u "${BUILD_USER_UID}" -g "${BUILD_USER_GID}" "${BUILD_USER}"
+
   if [[ "${ROOTLESS}" == "yes" ]]; then
     chown "${BUILD_USER}":"${BUILD_USER}" -R "${PROJECT_DIR}"
   fi
+
   sudo --set-home --preserve-env -u "${BUILD_USER}" "${0}" "${@}"
+  return_code=$?
+
   if [[ "${ROOTLESS}" == "yes" ]]; then
     chown root:root -R "${PROJECT_DIR}"
   fi
+
+  exit $return_code
 else
   if ! is_dir_and_can_access "${PROJECT_DIR}"; then
     >&2 echo \

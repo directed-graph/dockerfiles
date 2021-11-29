@@ -1,7 +1,7 @@
 FROM archlinux:base-devel
 
 # Run pacman first before anything else to take advantage of build cache.
-ARG PACKAGES="git bazel python rsync"
+ARG PACKAGES="git bazel protobuf python python-protobuf rsync"
 RUN pacman -Syu --noconfirm && \
     pacman -S --noconfirm --needed ${PACKAGES} && \
     pacman -Sc --noconfirm
